@@ -1,7 +1,7 @@
 #!/usr/bin/env osascript
 on run argv
 
-  set msg to "Available Commands:\n"
+  set msg to "Some Things You Can Ask Me:\n"
   set msg to msg & "  go, play [uri]                 - Start playback / play uri\n"
   set msg to msg & "  go, play track  [song name]    - Search and play track\n"
   set msg to msg & "  go, play artist [artist name]  - Search and play artist\n"
