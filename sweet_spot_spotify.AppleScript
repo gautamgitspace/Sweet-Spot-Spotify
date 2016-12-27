@@ -2,20 +2,23 @@
 on run argv
 
   set msg to "Some Things You Can Ask Me:\n"
-  set msg to msg & "  go, play [uri]                 - Start playback / play uri\n"
-  set msg to msg & "  go, play track  [song name]    - Search and play track\n"
-  set msg to msg & "  go, play artist [artist name]  - Search and play artist\n"
-  set msg to msg & "  go, play album  [album name]   - Search and play album\n"
+  set msg to msg & "  go, play [uri]                    - Start playback / play uri\n"
+  set msg to msg & "  go, play track  [song name]       - Search and play track\n"
+  set msg to msg & "  go, play artist [artist name]     - Search and play artist\n"
+  set msg to msg & "  go, play album  [album name]      - Search and play album\n"
   set msg to msg & "  pause, stop                       - Stop playback\n"
   set msg to msg & "  play/pause                        - Toggle playback\n"
   set msg to msg & "  n                                 - Next track\n"
-  set msg to msg & "  p                                 - Previous track\n"
+  set msg to msg & "  p, prev                           - Previous track\n"
   set msg to msg & "  i                                 - Print track info\n"
-  set msg to msg & "  fwd N                             - Jump N seconds forwards\n"
-  set msg to msg & "  rwd N                             - Jump N seconds backwards\n"
-  set msg to msg & "  s                                 - Toggle shuffle\n"
-  set msg to msg & "  r                                 - Toggle repeat\n"
+  set msg to msg & "  jump N                            - Jump to N seconds in the song\n"
+  set msg to msg & "  forward N                         - Jump N seconds forwards\n"
+  set msg to msg & "  rewind N                          - Jump N seconds backwards\n"
+  set msg to msg & "  shuffle                           - Toggle shuffle\n"
+  set msg to msg & "  repeat                            - Toggle repeat\n"
   set msg to msg & "  vol N, up, down                   - Set Volume to N (0...100)\n"
+  set msg to msg & "  increasevolume N                  - Increment Volume by N (0...100)\n"
+  set msg to msg & "  decreasevolume N                  - Decrement Volume by N (0...100)\n"
 
   set waitFlag to false
 
@@ -58,3 +61,17 @@ on run argv
         end if
         tell application "Spotify" to play track uri
       end if
+    -- Play/Pause
+    else if command is equal to "play/pause" then
+      tell application "Spotify" to playpause
+      return "Control Toggled!"
+    -- Pause
+    else if command is equal to "pause" or command is equal to "stop" then
+      tell application "Spotify" to pause
+      return "Paused!"
+    -- Next
+    else if command is equal to "n" then
+      tell application "Spotify" to next track
+    -- Prev
+    else if command is equal to "p" or command is equal to "prev" then
+      tell application "Spotify" to previous track
