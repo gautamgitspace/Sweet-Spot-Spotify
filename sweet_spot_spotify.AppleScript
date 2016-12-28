@@ -11,14 +11,10 @@ on run argv
   set msg to msg & "  n                                 - Next track\n"
   set msg to msg & "  p, prev                           - Previous track\n"
   set msg to msg & "  i                                 - Print track info\n"
-  set msg to msg & "  jump N                            - Jump to N seconds in the song\n"
-  set msg to msg & "  forward N                         - Jump N seconds forwards\n"
-  set msg to msg & "  rewind N                          - Jump N seconds backwards\n"
+  set msg to msg & "  seek N                            - Seek to N seconds in the song(FWD OR RWD)\n"
   set msg to msg & "  shuffle                           - Toggle shuffle\n"
   set msg to msg & "  repeat                            - Toggle repeat\n"
   set msg to msg & "  vol N, up, down                   - Set Volume to N (0...100)\n"
-  set msg to msg & "  increasevolume N                  - Increment Volume by N (0...100)\n"
-  set msg to msg & "  decreasevolume N                  - Decrement Volume by N (0...100)\n"
 
   set waitFlag to false
 
@@ -75,3 +71,19 @@ on run argv
     -- Prev
     else if command is equal to "p" or command is equal to "prev" then
       tell application "Spotify" to previous track
+    -- Seek Track
+    else if command is equal to "seek"
+      set jumpTo to item 2 of argv as real
+      tell application "Spotify"
+        set tMax to duration of current track
+        if jumpTo > tMax
+          return "Can't jump past end of track."
+        else if jumpTo < 0
+          return "Can't jump past start of track."
+        end if
+        set nM to round (jumpTo / 60) rounding down
+        set nS to round (jumpTo mod 60) rounding down
+        set newTime to nM as text & "min " & nS as text & "s"
+        set player position to jumpTo
+        return "Jumped to " & newTime
+      end tell
