@@ -14,7 +14,7 @@ on run argv
   set msg to msg & "  seek N                            - Seek to N seconds in the song(FWD OR RWD)\n"
   set msg to msg & "  shuffle                           - Toggle shuffle\n"
   set msg to msg & "  repeat                            - Toggle repeat\n"
-  set msg to msg & "  vol N                             - Set Volume to N (0...100)\n"
+  set msg to msg & "  vol N                             - Set Volume to N (0..100)\n"
 
   set waitFlag to false
 
