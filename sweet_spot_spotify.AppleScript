@@ -6,15 +6,15 @@ on run argv
   set msg to msg & "  go, play track  [song name]       - Search and play track\n"
   set msg to msg & "  go, play artist [artist name]     - Search and play artist\n"
   set msg to msg & "  go, play album  [album name]      - Search and play album\n"
-  set msg to msg & "  pause, stop                       - Stop playback\n"
+  set msg to msg & "  pause, x                          - Stop playback\n"
   set msg to msg & "  play/pause                        - Toggle playback\n"
   set msg to msg & "  n                                 - Next track\n"
   set msg to msg & "  p, prev                           - Previous track\n"
   set msg to msg & "  i                                 - Print track info\n"
   set msg to msg & "  seek N                            - Seek to N seconds in the song(FWD OR RWD)\n"
-  set msg to msg & "  shuffle                           - Toggle shuffle\n"
+  set msg to msg & "  mix                               - Toggle shuffle\n"
   set msg to msg & "  repeat                            - Toggle repeat\n"
-  set msg to msg & "  vol N                             - Set Volume to N (0...100)\n"
+  set msg to msg & "  vol N, high, low                   - Set Volume to N (0...100)\n"
 
   set waitFlag to false
 
@@ -62,7 +62,7 @@ on run argv
       tell application "Spotify" to playpause
       return "Control Toggled!"
     -- Pause
-    else if command is equal to "pause" or command is equal to "stop" then
+    else if command is equal to "pause" or command is equal to "x" then
       tell application "Spotify" to pause
       return "Paused!"
     -- Next
@@ -87,3 +87,20 @@ on run argv
         set player position to jumpTo
         return "Jumped to " & newTime
       end tell
+    -- Volume
+    else if command is equal to "vol" then
+      tell application "Spotify" to set lastVolume to sound volume
+      if item 2 of argv as text is equal to "high" then
+        set newVolume to lastVolume + 10
+      else if item 2 of argv as text is equal to "low" then
+        set newVolume to lastVolume - 10
+      else
+        set newVolume to item 2 of argv as real
+      end if
+      if newVolume < 0 then set newVolume to 0
+      if newVolume > 100 then set newVolume to 100
+      tell application "Spotify"
+        set sound volume to newVolume
+      end tell
+      delay 0.1
+      return "Changed volume to " & newVolume
