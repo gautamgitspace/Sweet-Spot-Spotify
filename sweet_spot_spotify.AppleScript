@@ -108,3 +108,10 @@ on run argv
       end tell
       delay 0.1
       return "Changed volume to " & newVolume
+    -- Shuffle
+    else if command is equal to "mix" then
+      tell application "Spotify"
+        set shuffling to not shuffling
+        delay 0.1
+        return "Shuffle is now " & shuffling
+      end tell
