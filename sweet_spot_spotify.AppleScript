@@ -13,12 +13,8 @@ on run argv
   set msg to msg & "  i                                 - Print track info\n"
   set msg to msg & "  seek N                            - Seek to N seconds in the song(FWD OR RWD)\n"
   set msg to msg & "  mix                               - Toggle shuffle\n"
-  set msg to msg & "  repeat                            - Toggle repeat\n"
-<<<<<<< HEAD
-  set msg to msg & "  vol N, high, low                   - Set Volume to N (0...100)\n"
-=======
-  set msg to msg & "  vol N                             - Set Volume to N (0..100)\n"
->>>>>>> 71e2623632154cd0a5c18827c9db9e63c2d5d1ee
+  set msg to msg & "  rep                               - Toggle repeat\n"
+  set msg to msg & "  vol N, high, low                  - Set Volume to N (0...100)\n"
 
   set waitFlag to false
 
@@ -106,7 +102,29 @@ on run argv
       tell application "Spotify"
         set sound volume to newVolume
       end tell
-      delay 0.1
+      delay 0.2
+      return "Changed volume to " & newVolume
+    -- IncreaseVolume
+    else if command is equal to "increasevolume" then
+      set volumeInc to item 2 of argv as real
+      tell application "Spotify"
+        set currentVolume to sound volume
+        set newVolume to currentVolume + volumeInc
+        if newVolume < 0 then set newVolume to 0
+        if newVolume > 100 then set newVolume to 100
+        set sound volume to newVolume
+      end tell
+      return "Changed volume to " & newVolume
+    -- Decrease Volume
+    else if command is equal to "decreasevolume" then
+      set volumeInc to item 2 of argv as real
+      tell application "Spotify"
+        set currentVolume to sound volume
+        set newVolume to currentVolume - volumeInc
+        if newVolume < 0 then set newVolume to 0
+        if newVolume > 100 then set newVolume to 100
+        set sound volume to newVolume
+      end tell
       return "Changed volume to " & newVolume
     -- Shuffle
     else if command is equal to "mix" then
@@ -114,4 +132,11 @@ on run argv
         set shuffling to not shuffling
         delay 0.1
         return "Shuffle is now " & shuffling
+      end tell
+    -- Repeat
+    else if command is equal to "rep" then
+      tell application "Spotify"
+        set repeating to not repeating
+        delay 0.1
+        return "Repeat is now " & repeating
       end tell
