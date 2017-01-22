@@ -104,28 +104,6 @@ on run argv
       end tell
       delay 0.2
       return "Changed volume to " & newVolume
-    -- IncreaseVolume
-    else if command is equal to "increasevolume" then
-      set volumeInc to item 2 of argv as real
-      tell application "Spotify"
-        set currentVolume to sound volume
-        set newVolume to currentVolume + volumeInc
-        if newVolume < 0 then set newVolume to 0
-        if newVolume > 100 then set newVolume to 100
-        set sound volume to newVolume
-      end tell
-      return "Changed volume to " & newVolume
-    -- Decrease Volume
-    else if command is equal to "decreasevolume" then
-      set volumeInc to item 2 of argv as real
-      tell application "Spotify"
-        set currentVolume to sound volume
-        set newVolume to currentVolume - volumeInc
-        if newVolume < 0 then set newVolume to 0
-        if newVolume > 100 then set newVolume to 100
-        set sound volume to newVolume
-      end tell
-      return "Changed volume to " & newVolume
     -- Shuffle
     else if command is equal to "mix" then
       tell application "Spotify"
