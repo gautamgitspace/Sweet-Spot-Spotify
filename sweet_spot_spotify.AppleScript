@@ -118,3 +118,9 @@ on run argv
         delay 0.1
         return "Repeat is now " & repeating
       end tell
+    -- Info
+    else if command is equal to "i" then
+      tell application "Spotify"
+        set myTrack to name of current track
+        set myArtist to artist of current track
+        set myAlbum to album of current track
