@@ -124,3 +124,5 @@ on run argv
         set myTrack to name of current track
         set myArtist to artist of current track
         set myAlbum to album of current track
+        set tM to round ((duration of current track / 1000) / 60) rounding down
+        set tS to round ((duration of current track / 1000) mod 60) rounding down
