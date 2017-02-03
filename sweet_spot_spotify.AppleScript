@@ -126,3 +126,7 @@ on run argv
         set myAlbum to album of current track
         set tM to round ((duration of current track / 1000) / 60) rounding down
         set tS to round ((duration of current track / 1000) mod 60) rounding down
+        set myTime to tM as text & "min " & tS as text & "s"
+        set nM to round (player position / 60) rounding down
+        set nS to round (player position mod 60) rounding down
+        set nowAt to nM as text & "min " & nS as text & "s"
