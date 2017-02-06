@@ -139,3 +139,7 @@ on run argv
         set info to info & "\n Now at:   " & nowAt
         set info to info & "\n Player:   " & player state
         set info to info & "\n Volume:   " & sound volume
+        if shuffling then set info to info & "\n Shuffle is on."
+        if repeating then set info to info & "\n Repeat is on."
+      end tell
+      return info
