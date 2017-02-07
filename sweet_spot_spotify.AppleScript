@@ -143,3 +143,7 @@ on run argv
         if repeating then set info to info & "\n Repeat is on."
       end tell
       return info
+    else
+      log "\nCommand not recognized!\n"
+      return msg
+    end if
