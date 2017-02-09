@@ -147,3 +147,26 @@ on run argv
       log "\nCommand not recognized!\n"
       return msg
     end if
+
+    tell application "Spotify"
+      delay 0.1
+      repeat while waitFlag
+        set nS to round (player position / 1) rounding down
+        if nS as text is less than 3 then
+          set waitFlag to false
+        end if
+      end repeat
+      set shuf to ""
+      set rpt to ""
+      if shuffling then
+        set shuf to "\n[shuffle on]"
+        if repeating then set rpt to "[repeat on]"
+      else
+        if repeating then set rpt to "\n[repeat on]"
+      end if
+      if player state as text is equal to "playing"
+        return "Now playing: " & artist of current track & " - " & name of current track & shuf & rpt
+      end if
+    end tell
+  end using terms from
+end run
